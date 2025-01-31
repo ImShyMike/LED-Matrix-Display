@@ -1,6 +1,6 @@
 # LED Matrix Display Stuff
 
-This project was made for the [neon YSWS](https://github.com/hackclub/neon) and allows you to display up to 3 data points from an API. It's highly customizeable and can be tweaked to show many things.
+This project was made for the [neon YSWS](https://github.com/hackclub/neon) and allows you to display up to 3 data points from an API. It's highly customizable and can be tweaked to show many things.
 
 ## How to use
 
