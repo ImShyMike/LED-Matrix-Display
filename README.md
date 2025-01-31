@@ -11,7 +11,7 @@ An example can be found [here](./server.py).
 
 The example returns the following:
 
-```json
+```json5
 { # Example data
     "CPU": 21,
     "RAM": 36,
@@ -25,7 +25,7 @@ The example returns the following:
 
 The default configuration will show CPU, RAM and Temperature values using the example server.
 
-```json
+```json5
 {
     "api_url": "http://example.com/data",  # Replace with the actual endpoint
     "size": [64, 32, 3],  # width, height, bit_depth
