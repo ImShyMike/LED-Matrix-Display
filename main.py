@@ -12,29 +12,28 @@ from adafruit_display_text import label
 
 # INFO: each line has a maximum of 10 characters
 CONFIG = {
-    "api_url": "https://test.shymike.tech/data",  # Replace with the actual endpoint
+    "api_url": "http://example.com/data",  # Replace with the actual endpoint
     "size": [64, 32, 3],  # width, height, bit_depth
     "font": terminalio.FONT,
     "background_color": 0x000000,
     "update_interval": 1,  # in seconds
-    "keep_values_on_fail": 5, # Dont reset to placeholder if data fetch fails for X retries
-    "data": { # Maximum of 3 items
+    "keep_values_on_fail": 5,  # Persist data if the request fails (X times)
+    "request_timeout": 5,  # in seconds
+    "data": {  # Maximum of 3 items
         "CPU": {
-            "color": 0xFFFFFF, # Also acts as color if thresholds are not met
+            "color": 0xFFFFFF,  # Also acts as color if thresholds are not met
             "unit": "%",
             "placeholder": "0",  # Can be None to disable if not available
-            "max_length": 3,
             "thresholds": {
                 "high": [90, 0xFF0000],
                 "med": [50, 0xFFFF00],
-                "low": [0, 0x00FF00],
+                "low": [10, 0x00FF00],
             },
         },
         "RAM": {
             "color": 0xFFFFFF,
             "unit": "%",
             "placeholder": "0",
-            "max_length": 3,
             "thresholds": {
                 "high": [70, 0xFF0000],
                 "med": [50, 0xFFFF00],
@@ -45,7 +44,6 @@ CONFIG = {
             "color": 0xFFFFFF,
             "unit": "C",
             "placeholder": "0",
-            "max_length": 3,
             "thresholds": {
                 "high": [70, 0xFF0000],
                 "med": [60, 0xFFFF00],
@@ -63,10 +61,8 @@ def generate_labels(config):
     labels = []
     for i, (key, value) in enumerate(config["data"].items()):
         label_size = len(key) + 2
-        value_size = value["max_length"] + len(value["unit"])
-        total_size = (
-            label_size + value_size
-        )
+        value_size = len(str(value["thresholds"]["high"][0])) + len(value["unit"])
+        total_size = label_size + value_size
         if total_size > 10:
             raise ValueError(f"Size of {key} is too long. Max size is 10 characters.")
         label_text = f"%VALUE%{value['unit']}"
@@ -93,7 +89,7 @@ def generate_labels(config):
 def get_data_from_api() -> None | dict:
     """Fetch data from the an external API."""
     try:
-        response = requests.get(CONFIG["api_url"], timeout=5)
+        response = requests.get(CONFIG["api_url"], timeout=CONFIG["request_timeout"])
         if response.status_code == 200:
             data = response.json()
             server_data = {}
@@ -101,8 +97,7 @@ def get_data_from_api() -> None | dict:
                 if item in data:
                     server_data[item] = data[item]
             return server_data
-        else:
-            return None
+        return None
     except Exception as e:  # pylint: disable=broad-except
         print(f"Error fetching system data from API: {e}")
         return None
@@ -151,8 +146,8 @@ def main():
 
     labels = generate_labels(CONFIG)
     for item in labels:
-        main_screen.append(item[3]) # Add the key label
-        main_screen.append(item[0]) # Add the value label
+        main_screen.append(item[3])  # Add the key label
+        main_screen.append(item[0])  # Add the value label
 
     fail_count = 0
 
@@ -182,9 +177,7 @@ def main():
                 CONFIG["data"][label_name]["color"],
             )
             value = str(data_str)
-            label_item.text = label_text.replace(
-                "%VALUE%", value
-            ).rjust(10)
+            label_item.text = label_text.replace("%VALUE%", value).rjust(10)
 
         # Update display
         display.root_group = main_screen
