@@ -12,7 +12,7 @@ An example can be found [here](./server.py).
 The example returns the following:
 
 ```json5
-{ # Example data
+{ // Example data
     "CPU": 21,
     "RAM": 36,
     "Temp": 70
@@ -27,23 +27,23 @@ The default configuration will show CPU, RAM and Temperature values using the ex
 
 ```json5
 {
-    "api_url": "http://example.com/data",  # Replace with the actual endpoint
-    "size": [64, 32, 3],  # width, height, bit_depth
+    "api_url": "http://example.com/data",  // Replace with the actual endpoint
+    "size": [64, 32, 3],  // width, height, bit_depth
     "font": terminalio.FONT,
     "background_color": 0x000000,
-    "update_interval": 1,  # in seconds
-    "keep_values_on_fail": 5, # Persist data if the request fails (X times)
-    "request_timeout": 5,  # in seconds
-    "data": { # Maximum of 3 items
+    "update_interval": 1,  // in seconds
+    "keep_values_on_fail": 5, // Persist data if the request fails (X times)
+    "request_timeout": 5,  // in seconds
+    "data": { // Maximum of 3 items
         "CPU": {
-            "color": 0xFFFFFF, # Also acts as color if thresholds are not met
-            "unit": "%", # Unit for the datapoint
-            "placeholder": "0",  # Can be None to disable if not available
-            "max_length": 3, # Max length of the data
+            "color": 0xFFFFFF, // Also acts as color if thresholds are not met
+            "unit": "%", // Unit for the datapoint
+            "placeholder": "0",  // Can be None to disable if not available
+            "max_length": 3, // Max length of the data
             "thresholds": {
                 "high": [90, 0xFF0000],
                 "med": [50, 0xFFFF00],
-                "low": [0, 0x00FF00], # If below this, the default color will be used
+                "low": [0, 0x00FF00], // If below this, the default color will be used
             },
         },
         "RAM": {
