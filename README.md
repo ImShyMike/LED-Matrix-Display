@@ -2,6 +2,10 @@
 
 This project was made for the [neon YSWS](https://github.com/hackclub/neon) and allows you to display up to 3 data points from an API. It's highly customizable and can be tweaked to show many things.
 
+## Demo Image
+
+![Demo Image](./matrix_image.png)
+
 ## How to use
 
 ### Setup the server
