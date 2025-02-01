@@ -139,7 +139,7 @@ def main():
         displayio.Bitmap(display.width, display.height, 1),
         pixel_shader=displayio.Palette(1),
     )
-    background.pixel_shader[0] = CONFIG["background_color"]  # Black background
+    background.pixel_shader[0] = CONFIG["background_color"]
 
     # Add background to the main screen group (just once)
     main_screen.append(background)
