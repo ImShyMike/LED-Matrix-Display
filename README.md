@@ -2,6 +2,10 @@
 
 This project was made for the [neon YSWS](https://github.com/hackclub/neon) and allows you to display up to 3 data points from an API. It's highly customizable and can be tweaked to show many things.
 
+## Try it out
+
+You can run it without having an actual LED Matrix by going over to: <https://neon.hackclub.dev/open?author=ImShyMike&repo=LED-Matrix-Display> (you need to change the `api_url` to get actual data)
+
 ## Demo Image
 
 ![Demo Image](./matrix_image.png)
